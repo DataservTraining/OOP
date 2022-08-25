@@ -31,3 +31,64 @@ FROM EMP e
 GROUP BY deptno) b
 WHERE a.deptno = b.deptno
 AND a.sal > b.salavg;
+
+
+
+
+/* Kapitel 19 */
+
+SELECT ename, hiredate
+  FROM EMP
+  WHERE deptno IN (SELECT deptno
+                    FROM EMP
+                    WHERE ename = 'BLAKE')
+  AND ename != 'BLAKE';
+
+SELECT empno, ename
+  FROM EMP
+  WHERE sal > (SELECT AVG(sal)
+                FROM EMP)
+  ORDER BY sal DESC;
+
+SELECT deptno, ename, job
+  FROM EMP
+  WHERE deptno IN  (SELECT deptno
+                      FROM DEPT
+                      WHERE dname = 'SALES');
+
+SELECT ename, deptno, sal
+  FROM EMP
+  WHERE (sal, deptno) IN (SELECT sal, deptno
+                            FROM EMP
+                            WHERE comm IS NOT NULL);
+
+
+SELECT ename, job, sal
+  FROM EMP
+  WHERE sal > ALL (SELECT sal
+                      FROM EMP
+                      WHERE job = 'CLERK')
+  ORDER BY sal DESC;
+
+select a.ename, a.sal, a.deptno
+  from EMP a, 
+      (select deptno, max(sal) maximal 
+      from EMP 
+      group by deptno)  b
+  where a.deptno = b.deptno
+  and a.sal = b.maximal;
+
+/*oder: */
+
+select a.ename, a.sal, a.deptno
+  from EMP a inner join (select deptno, max(sal) maximal from EMP group by deptno)  b
+  on a.deptno = b.deptno
+  where a.sal = b.maximal;
+
+/*oder: */
+
+select o.ename, o.sal, o.deptno
+  from EMP o
+  where o.sal = (select max(sal) 
+                    from EMP i 
+                    where o.deptno  = i.deptno);
