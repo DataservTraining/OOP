@@ -55,6 +55,9 @@ SELECT deptno, ename, job
   WHERE deptno IN  (SELECT deptno
                       FROM DEPT
                       WHERE dname = 'SALES');
+                     
+SELECT DEPTNO, ENAME, JOB FROM EMP e  WHERE DEPTNO = 30;
+
 
 SELECT ename, deptno, sal
   FROM EMP
@@ -69,6 +72,15 @@ SELECT ename, job, sal
                       FROM EMP
                       WHERE job = 'CLERK')
   ORDER BY sal DESC;
+ 
+ 
+ 
+ SELECT ENAME, JOB, SAL FROM EMP e 
+WHERE SAL > (SELECT max(SAL) FROM EMP e2  WHERE lower(JOB) = 'clerk')
+ORDER BY SAL DESC;
+
+ 
+ 
 
 select a.ename, a.sal, a.deptno
   from EMP a, 
@@ -92,3 +104,14 @@ select o.ename, o.sal, o.deptno
   where o.sal = (select max(sal) 
                     from EMP i 
                     where o.deptno  = i.deptno);
+                   
+                   
+                   
+SELECT e.ename, e.sal, e.deptno
+	FROM emp e 
+	WHERE e.sal IN (SELECT max(sal) FROM emp e2 WHERE e2.DEPTNO = e.DEPTNO);
+
+SELECT ENAME, SAL, DEPTNO FROM EMP e 
+WHERE SAL IN (SELECT max(SAL) FROM EMP e2  GROUP BY DEPTNO) ORDER BY DEPTNO;
+
+                   
