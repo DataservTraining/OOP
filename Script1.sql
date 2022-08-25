@@ -28,7 +28,7 @@ RENAME TABLE person2 TO person3;
 
 Truncate TABLE person3;
 
-INSERT INTO person3 VALUES ('test1', 'test2', 10, 34.5, 12.3, 45.6);
+INSERT INTO person8 VALUES ('test1', 'test2', 10, 34.5, 12.3, 45.6);
 
 
 CREATE TABLE person2 (
@@ -98,3 +98,52 @@ DELETE FROM adresse WHERE adressId = 2;
 ALTER TABLE person8 DROP CONSTRAINT adresse_person8_fk;
 
 ALTER TABLE person8 ADD CONSTRAINT adresse_person8_fk FOREIGN KEY (adresse) REFERENCES adresse(adressId);
+
+/* Kapitel 12 */
+
+CREATE TABLE MY_EMPLOYEE
+(ID	Integer(4) NOT NULL,
+LAST_NAME	VARCHAR(25),
+FIRST_NAME	VARCHAR(25),
+USERID	VARCHAR(8),
+SALARY	Decimal(9,2));
+
+INSERT INTO MY_EMPLOYEE
+VALUES (1, 'Patel', 'Ralph', 'rpatel', 795);
+
+INSERT INTO MY_EMPLOYEE (id, last_name, first_name, userid, salary)
+VALUES (2, 'Dancs', 'Betty', 'bdancs', 860);
+
+INSERT INTO MY_EMPLOYEE (id, last_name, first_name, userid, salary)
+VALUES (3, 'Biri', 'Ben', 'bbiri', 1100);
+
+INSERT INTO MY_EMPLOYEE (id, last_name, first_name, userid, salary)
+VALUES (4, 'Newman', 'Chad', 'cnewman', 750);
+
+INSERT INTO MY_EMPLOYEE (id, last_name, first_name, userid, salary)
+VALUES (5, 'Ropeburn', 'Audry', 'aropebur', 860);
+
+UPDATE MY_EMPLOYEE
+SET last_name = 'Drexler'
+WHERE id = 3;
+
+UPDATE MY_EMPLOYEE
+SET salary = 1000
+WHERE salary < 900;
+
+DELETE FROM MY_EMPLOYEE
+WHERE  id = 2;
+
+Commit;
+
+SAVEPOINT a;
+
+DELETE FROM MY_EMPLOYEE;
+
+SELECT * FROM MY_EMPLOYEE;
+
+ROLLBACK to a;
+
+COMMIT;
+
+
